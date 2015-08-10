@@ -1,0 +1,15 @@
+{
+"name" : "shugraduationproject-server",
+"version" : "0.0.1",
+"private" : true,
+"dependencies" : {
+"express" : "*",
+"mongodb" : "*",
+"moment" : "*",
+"lodash" : "*",
+"crypto":"*",
+"nodemailer": "~0.7.1"
+
+
+}
+}
