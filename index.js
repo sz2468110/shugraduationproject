@@ -77,7 +77,7 @@ app.get('/api/createDataPoint', function(request, response) {
 	});
 });
 app.get('/api/addgroup', function(request, response) {
-	// 群組註冊
+	// 群組加入(註冊)
 	if (!request.query.value) {
 		__sendErrorResponse(response, 403, 'No query parameters value');
 		return;
@@ -130,7 +130,7 @@ app.get('/api/addgroup', function(request, response) {
 	};
 	var name = {
 		straccount : straccount,
-		username : username
+		groupaccount : groupaccount
 
 	};
 
@@ -144,6 +144,7 @@ var items2 = database.collection('name_history');
 			response.end();
 		}
 	});
+
 	var items = database.collection('group_history');
 	items.insert(insert, function(err, result) {
 		if (err) {
@@ -174,195 +175,14 @@ app.get('/api/queryDataPoint', function(request, response) {
 	});
 });
 
-app.get('/api/login', function(request, response) {
-	// 使用者登入
+
+
+
+
+
+app.get('/api/findgroup', function(request, response) {
+	// 輸入會員帳號回傳擁有的群組
 	var straccount;
-	var strname;
-	var strpasswd;
-	var endString
-	var str = request.query.value;
-	var AccountArray = new Array();
-	var AccountArray = str.split(",");
-	for(a=0; a<3; a++)
-	{
-		if(a==0)
-		{
-			straccount = AccountArray[a];
-		}
-		else if (a == 1)
-        {
-        	strpasswd = AccountArray[a];
-
-        	
-          
-       
-        }
-		else if(a==2)
-		{
-            strname = AccountArray[a];
-		}
-
-	}
-
-
-	
-	var items = database.collection('beacon_history');
-	items.find({straccount : straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
-	});
-});
-
-app.get('/api/logingroup', function(request, response) {
-	// 群組登入(回傳密碼比對)
-	var groupaccount;
-	var username;
-	var grouppasswd;
-	var straccount ;
-	var endString
-	var str = request.query.value;
-	var AccountArray = new Array();
-	var AccountArray = str.split(",");
-	for(a=0; a<4; a++)
-	{
-		if(a==0)
-		{
-			groupaccount = AccountArray[a];
-		}
-		else if (a == 1)
-        {
-        	grouppasswd = AccountArray[a];
-
-        	
-          
-       
-        }
-		else if(a==2)
-		{
-            username = AccountArray[a];
-		}
-		else if(a==3)
-		{
-			straccount = AccountArray[a];
-		}
-	}
-for(a=0;a<2;a++)
-{
-	if(a==0)
-	{
-
-var items = database.collection('name_history');
-	items.find({straccount : straccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
-	});
-    }
-    else if(a==1)
-	{
-	var items = database.collection('group_history');
-	items.find({groupaccount : groupaccount}, {"grouppasswd": 1, "_id": 0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
-	});
-}
-}
-});
-app.get('/api/logingroup2', function(request, response) {
-	// 群組登入(回傳username比對)
-	var groupaccount;
-	var username;
-	var grouppasswd;
-	var endString
-	var straccount;
-	var str = request.query.value;
-	var AccountArray = new Array();
-	var AccountArray = str.split(",");
-	for(a=0; a<4; a++)
-	{
-		if(a==0)
-		{
-			groupaccount = AccountArray[a];
-		}
-		else if (a == 1)
-        {
-        	grouppasswd = AccountArray[a];
-
-        	
-          
-       
-        }
-		else if(a==2)
-		{
-            username = AccountArray[a];
-		}
-		else if(a==3)
-		{
-			straccount = AccountArray[a];
-		}
-	}
-
-
-	
-	var items = database.collection('name_history');
-	items.find({straccount : straccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
-	});
-});
-app.get('/api/logingroup2', function(request, response) {
-	// 傳送訊息
-	
-	var username;
-	var message ;
-	var endString;
-	
-	var str = request.query.value;
-	var AccountArray = new Array();
-	var AccountArray = str.split(",");
-	for(a=0; a<2; a++)
-	{
-		if(a==0)
-		{
-			username = AccountArray[a];
-		}
-		else if (a == 1)
-        {
-        	message = AccountArray[a];
-
-        }
-	}
-
-
-	
-	var items = database.collection('name_history');
-	items.find({username : username}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
-	});
-});
-app.get('/api/findusername', function(request, response) {
-	// 輸入群組名子回傳群組會員
-	var groupaccount;
 	
 	var endString
 	var str = request.query.value;
@@ -372,15 +192,15 @@ app.get('/api/findusername', function(request, response) {
 	{
 		if(a==0)
 		{
-			groupaccount = AccountArray[a];
+			straccount = AccountArray[a];
 		}
 		
 	}
 
 
 	
-	var items = database.collection('group_history');
-	items.find({groupaccount : groupaccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
+	var items = database.collection('name_history');
+	items.find({straccount : straccount}, {"groupaccount": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
@@ -390,8 +210,8 @@ app.get('/api/findusername', function(request, response) {
 	});
 });
 app.get('/api/findgroupaccount', function(request, response) {
-	// 輸入群組會員回傳群組名子
-	var username;
+	// 輸入群組名字回傳會員名字
+	var groupaccount;
 	
 	var endString
 	var str = request.query.value;
@@ -401,7 +221,7 @@ app.get('/api/findgroupaccount', function(request, response) {
 	{
 		if(a==0)
 		{
-			username = AccountArray[a];
+			groupaccount = AccountArray[a];
 		}
 		
 	}
@@ -409,7 +229,7 @@ app.get('/api/findgroupaccount', function(request, response) {
 
 	
 	var items = database.collection('group_history');
-	items.find({username : username}, {"groupaccount": 1, "_id": 0}).toArray(function(err, docs) {
+	items.find({groupaccount: groupaccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
