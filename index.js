@@ -209,7 +209,7 @@ app.get('/api/findgroup', function(request, response) {
 		}
 	});
 });
-app.get('/api/findgroupaccount', function(request, response) {
+app.get('/api/findusername', function(request, response) {
 	// 輸入群組名字回傳會員名字
 	var groupaccount;
 	
