@@ -250,9 +250,23 @@ app.get('/api/logingroup', function(request, response) {
 			straccount = AccountArray[a];
 		}
 	}
+for(a=0;a<2;a++)
+{
+	if(a==0)
+	{
 
-
-	
+var items = database.collection('name_history');
+	items.find({straccount : straccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+    }
+    else if(a==1)
+	{
 	var items = database.collection('group_history');
 	items.find({groupaccount : groupaccount}, {"grouppasswd": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
@@ -262,6 +276,8 @@ app.get('/api/logingroup', function(request, response) {
 			response.status(200).send(docs).end();
 		}
 	});
+}
+}
 });
 app.get('/api/logingroup2', function(request, response) {
 	// 群組登入(回傳username比對)
@@ -301,6 +317,41 @@ app.get('/api/logingroup2', function(request, response) {
 	
 	var items = database.collection('name_history');
 	items.find({straccount : straccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+});
+app.get('/api/logingroup2', function(request, response) {
+	// 傳送訊息
+	
+	var username;
+	var message ;
+	var endString;
+	
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			username = AccountArray[a];
+		}
+		else if (a == 1)
+        {
+        	message = AccountArray[a];
+
+        }
+	}
+
+
+	
+	var items = database.collection('name_history');
+	items.find({username : username}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
