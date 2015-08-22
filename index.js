@@ -76,6 +76,41 @@ app.get('/api/createDataPoint', function(request, response) {
 		}
 	});
 });
+app.get('/api/login', function(request, response) {
+	// 會員登入回傳密碼
+	var straccount;
+	var strname;
+	var strpasswd;
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			straccount = AccountArray[a];
+		}
+		else if (a == 1)
+        {
+        	
+         strpasswd = AccountArray[a];
+
+        }
+		
+	}
+
+	
+	var items = database.collection('beacon_history');
+	items.find({straccount: straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+});
 app.get('/api/addgroup', function(request, response) {
 	// 群組加入(註冊)
 	if (!request.query.value) {
