@@ -289,6 +289,7 @@ app.get('/api/leavemessage', function(request, response) {
 		{
 			receiver = AccountArray[a];
 		}
+		
 		if(a==1)
 		{
 			message = AccountArray[a];
@@ -328,17 +329,14 @@ app.get('/api/checkmessage', function(request, response) {
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<3; a++)
+	for(a=0; a<2; a++)
 	{
 		if(a==0)
 		{
 			receiver = AccountArray[a];
 		}
+		
 		if(a==1)
-		{
-			message = AccountArray[a];
-		}
-		if(a==2)
 		{
 			sender = AccountArray[a];
 		}
