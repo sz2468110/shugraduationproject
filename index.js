@@ -101,7 +101,7 @@ app.get('/api/login', function(request, response) {
 	}
 
 	
-	var items = database.collection('beacon_history');
+	var items = database.collection('beacon  _history');
 	items.find({straccount: straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
@@ -265,6 +265,88 @@ app.get('/api/findusername', function(request, response) {
 	
 	var items = database.collection('group_history');
 	items.find({groupaccount: groupaccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+});
+app.get('/api/leavemessage', function(request, response) {
+	// 留下訊息
+	var receiver;
+	var message;
+	var sender;
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<3; a++)
+	{
+		if(a==0)
+		{
+			receiver = AccountArray[a];
+		}
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		if(a==2)
+		{
+			sender = AccountArray[a];
+		}
+	}
+	var message = {
+		receiver : receiver ,
+		message : message ,
+		sender : sender
+
+	};
+
+
+
+	var items = database.collection('message_history');
+	items.insert(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send(result);
+			response.end();
+		}
+	});
+});
+app.get('/api/checkmessage', function(request, response) {
+	// 查看訊息
+	var receiver;
+	var message;
+	var sender;
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<3; a++)
+	{
+		if(a==0)
+		{
+			receiver = AccountArray[a];
+		}
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		if(a==2)
+		{
+			sender = AccountArray[a];
+		}
+	}
+
+	
+	var items = database.collection('message_history');
+	items.find({receiver : receiver , sender : sender}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
