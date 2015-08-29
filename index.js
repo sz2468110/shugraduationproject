@@ -101,7 +101,7 @@ app.get('/api/login', function(request, response) {
 	}
 
 	
-	var items = database.collection('beacon  _history');
+	var items = database.collection('beacon_history');
 	items.find({straccount: straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
