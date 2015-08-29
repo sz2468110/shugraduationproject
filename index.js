@@ -112,7 +112,7 @@ app.get('/api/login', function(request, response) {
 	});
 });
 app.get('/api/addgroup', function(request, response) {
-	// 群組加入(註冊)
+	// 群組加入(註冊))
 	if (!request.query.value) {
 		__sendErrorResponse(response, 403, 'No query parameters value');
 		return;
