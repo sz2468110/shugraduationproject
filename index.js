@@ -66,38 +66,15 @@ app.get('/api/createDataPoint', function(request, response) {
 
 
 	var items = database.collection('beacon_history');
-	items.find(straccount).toArray(function(err, result)
-{
+	items.insert(insert, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
-		          }
-		else {
-			var rt = [];
-			rt = result ;
-			//如果不是undefined或不是null表示有查到資料，則回傳
-			if (rt.length != 0) 
-			   { 
-				 console.log("已註冊過相同帳號");
-				response.type('application/json');
-				response.status(200).send(rt);  
-				response.end();
-			   }
-			 else 
-			     {
-			     items.insert(insert, function(err, result) 
-			        {
-		          if (err) {
-			             __sendErrorResponse(response, 406, err);
-		                   } 
-		          else 
-		                   {
-			                 response.type('application/json');
-			                 response.status(200).send(result);
-			                 response.end();
-		                   }
-	               });
-		         }
-	         });
+		} else {
+			response.type('application/json');
+			response.status(200).send(result);
+			response.end();
+		}
+	});
 });
 app.get('/api/login', function(request, response) {
 	// 會員登入回傳密碼
