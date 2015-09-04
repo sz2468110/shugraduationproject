@@ -66,13 +66,30 @@ app.get('/api/createDataPoint', function(request, response) {
 
 
 	var items = database.collection('beacon_history');
-	items.insert(insert, function(err, result) {
+	items.find(straccount, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
 		} else {
-			response.type('application/json');
+			var rt = [] ;
+			rt = result ;
+			if(rt.length !=0)
+			{
+				console.log("此帳號註冊過");
+               response.type('application/json');
 			response.status(200).send(result);
 			response.end();
+			}
+			else{
+			    items.insert(insert, function(err, result) {
+		       if (err) {
+			     __sendErrorResponse(response, 406, err);
+		       } else {
+			    response.type('application/json');
+			    response.status(200).send(result);
+			    response.end();
+		}
+	});
+		        }
 		}
 	});
 });
