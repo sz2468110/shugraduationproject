@@ -290,6 +290,48 @@ app.get('/api/findusername', function(request, response) {
 		}
 	});
 });
+app.get('/api/addusername', function(request, response) {
+	// 加人到群組
+	var groupaccount;
+	var username;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			username= AccountArray[a];
+		}
+		
+	}
+	var insert = {
+		groupaccount : groupaccount,
+		username : username
+
+	};
+
+
+
+	var items = database.collection('group_history');
+	items.insert(insert, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send(result);
+			response.end();
+		}
+	});
+});
 app.get('/api/leavemessage', function(request, response) {
 	// 留下訊息
 	var receiver;
