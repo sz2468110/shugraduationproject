@@ -63,35 +63,38 @@ app.get('/api/createDataPoint', function(request, response) {
 		strname : strname
 
 	};
-
-
-	var items = database.collection('beacon_history');
-	items.find(straccount).toArray.(function(err, result) {
+var items = database.collection('beacon_history');
+	items.find(straccount).toArray(function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
-		} else {
-			var rt = [] ;
-			rt = result ;
-			if( rt!==0 || rt!==null )
-			{
-				console.log("此帳號註冊過");
-               response.type('application/json');
+		         }
+		 else 
+		 {
+		 	if( result[]!==null)
+		 	{
+              console.log("帳號已註冊");
+			response.type('application/json');
 			response.status(200).send(result);
 			response.end();
-			}
-			else{
-			    items.insert(insert, function(err, result) {
+		    }
+		    else
+		    {
+               items.insert(insert, function(err, result) {
 		       if (err) {
-			     __sendErrorResponse(response, 406, err);
-		       } else {
+			      __sendErrorResponse(response, 406, err);
+		                }
+		     else     
+		      {
 			    response.type('application/json');
-			    response.status(200).send(result);
+		     	response.status(200).send(result);
 			    response.end();
-		}
+		       }
+	               });
+		    }
+		 }
 	});
-		        }
-		}
-	});
+
+	
 });
 app.get('/api/login', function(request, response) {
 	// 會員登入回傳密碼
@@ -122,9 +125,13 @@ app.get('/api/login', function(request, response) {
 	items.find({straccount: straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
-		} else {
+		         } 
+		else 
+		{
+			
 			response.type('application/json');
 			response.status(200).send(docs).end();
+		    
 		}
 	});
 });
