@@ -72,7 +72,7 @@ var items = database.collection('beacon_history');
 		 {
 		 	if( result[]!==null)
 		 	{
-              console.log("帳號已註冊");
+              console.log("帳號已註冊e");
 			response.type('application/json');
 			response.status(200).send(result);
 			response.end();
