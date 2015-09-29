@@ -72,7 +72,7 @@ app.get('/api/createDataPoint', function(request, response) {
 		} else {
 			var rt = [] ;
 			rt = result ;
-			if(rt.length !=0)
+			if( result = straccount )
 			{
 				console.log("此帳號註冊過");
                response.type('application/json');
