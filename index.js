@@ -66,13 +66,13 @@ app.get('/api/createDataPoint', function(request, response) {
 
 
 	var items = database.collection('beacon_history');
-	items.find(straccount, function(err, result) {
+	items.find(straccount).toArray.(function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
 		} else {
 			var rt = [] ;
 			rt = result ;
-			if( rt!=0 || rt!=null )
+			if( rt!==0 || rt!==null )
 			{
 				console.log("此帳號註冊過");
                response.type('application/json');
