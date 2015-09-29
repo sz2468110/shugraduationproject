@@ -63,36 +63,15 @@ app.get('/api/createDataPoint', function(request, response) {
 		strname : strname
 
 	};
-
-	var items = database.collection('beacon_history');
-	items.find(straccount).toArray(function(err, result) {
+var items = database.collection('beacon_history');
+	items.insert(insert, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
-		         }
-		 else 
-		 {
-		 	if( result[]!==null)
-		 	{
-              console.log("帳號已註冊");
+		} else {
 			response.type('application/json');
 			response.status(200).send(result);
 			response.end();
-		    }
-		    else
-		    {
-               items.insert(insert, function(err, result) {
-		       if (err) {
-			      __sendErrorResponse(response, 406, err);
-		                }
-		     else     
-		      {
-			    response.type('application/json');
-		     	response.status(200).send(result);
-			    response.end();
-		       }
-	               });
-		    }
-		 }
+		}
 	});
 
 	
