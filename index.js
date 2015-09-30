@@ -64,20 +64,7 @@ app.get('/api/createDataPoint', function(request, response) {
 
 	};
 var items = database.collection('beacon_history');
-	items.find(straccount, function(err, result) {
-		if (err) {
-			__sendErrorResponse(response, 406, err);
-		} else {
-			if(result[0]!=null){
-				console.log("已註冊過");
-			response.type('application/json');
-			response.status(200).send(result);
-			response.end();
-		     }
-		     else{
-
-		     
-		      items.insert(insert, function(err, result) {
+	items.insert(insert, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
 		} else {
@@ -85,10 +72,6 @@ var items = database.collection('beacon_history');
 			response.status(200).send(result);
 			response.end();
 		}
-	});
-                }
-		     }
-		
 	});
 
 	
