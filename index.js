@@ -114,7 +114,7 @@ app.get('/api/checkstraccount', function(request, response) {
 		       }    
             else{
             	response.type('application/json');
-			    response.status(200).send("未註冊過").end();
+			    response.status(200).send("未註冊").end();
 		        }
 		}
 	});
