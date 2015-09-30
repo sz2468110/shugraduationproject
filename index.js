@@ -97,7 +97,7 @@ app.get('/api/checkstraccount', function(request, response) {
 
 	
 	var items = database.collection('beacon_history');
-	items.find(straccount).toArray(function(err, docs) {
+	items.find({straccount: straccount}, {"straccount": 1}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		         } 
