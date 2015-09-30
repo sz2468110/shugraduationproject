@@ -109,7 +109,7 @@ app.get('/api/checkstraccount', function(request, response) {
 		{
 			
 			response.type('application/json');
-			response.status(200).send(docs2[1]).end();
+			response.status(200).send(docs2[].strname).end();
 		}
 	});
 });
@@ -153,7 +153,7 @@ app.get('/api/login', function(request, response) {
 	});
 });
 app.get('/api/addgroup', function(request, response) {
-	// 群組加入(註冊))
+	// 群組加入(註冊0))
 	if (!request.query.value) {
 		__sendErrorResponse(response, 403, 'No query parameters value');
 		return;
