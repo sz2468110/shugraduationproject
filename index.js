@@ -104,12 +104,12 @@ app.get('/api/checkstraccount', function(request, response) {
 		else 
 		{
 			if(docs[0]!==null){
-				console.log("帳號已註冊");
+				
 			response.type('application/json');
 			response.status(200).send("帳號已註冊");
 			response.end();
 			}else{
-			console.log("帳號可以進行註冊");
+		
 			response.type('application/json');
 			response.status(200).send("帳號可以註冊");
 			response.end();
