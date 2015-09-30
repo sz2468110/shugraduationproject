@@ -109,7 +109,7 @@ app.get('/api/checkstraccount', function(request, response) {
 		{
 			
 			response.type('application/json');
-			response.status(200).send(docs2[].strname).end();
+			response.status(200).send(docs2[0]).end();
 		}
 	});
 });
