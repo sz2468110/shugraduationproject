@@ -76,6 +76,54 @@ var items = database.collection('beacon_history');
 
 	
 });
+app.get('/api/checkstraccount', function(request, response) {
+	// 檢查帳號
+	var straccount;
+	var strname;
+	var strpasswd;
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<1; a++)
+	{
+		if(a==0)
+		{
+			straccount = AccountArray[a];
+		}
+		
+		
+	}
+
+	
+	var items = database.collection('beacon_history');
+	items.find(straccount).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		         } 
+		else 
+		{
+			if(docs[0]!==null){
+				console.log("帳號已註冊");
+			response.type('application/json');
+			response.status(200).send("帳號已註冊");
+			response.end();
+			}else{
+			items.insert(insert, function(err, result) {
+		       if (err) {
+			      __sendErrorResponse(response, 406, err);
+		                }
+		       else     
+		      {
+			    response.type('application/json');
+		     	response.status(200).send(result);
+			    response.end();
+		       }
+	               });
+		    }
+		}
+	});
+});
 app.get('/api/login', function(request, response) {
 	// 會員登入回傳密碼
 	var straccount;
