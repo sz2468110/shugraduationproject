@@ -102,10 +102,14 @@ app.get('/api/checkstraccount', function(request, response) {
 			response.status(406).send(err).end();
 		         } 
 		else 
+			var docs2 = new Array();
+		    docs2 = docs ;
+
+
 		{
 			
 			response.type('application/json');
-			response.status(200).send(docs).end();
+			response.status(200).send(docs2[1]).end();
 		}
 	});
 });
