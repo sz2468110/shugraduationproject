@@ -109,17 +109,10 @@ app.get('/api/checkstraccount', function(request, response) {
 			response.status(200).send("帳號已註冊");
 			response.end();
 			}else{
-			items.insert(insert, function(err, result) {
-		       if (err) {
-			      __sendErrorResponse(response, 406, err);
-		                }
-		       else     
-		      {
-			    response.type('application/json');
-		     	response.status(200).send(result);
-			    response.end();
-		       }
-	               });
+			console.log("帳號可以進行註冊");
+			response.type('application/json');
+			response.status(200).send("帳號可以進行註冊");
+			response.end();
 		    }
 		}
 	});
