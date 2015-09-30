@@ -96,27 +96,21 @@ app.get('/api/checkstraccount', function(request, response) {
 	}
 
 	
+	
 	var items = database.collection('beacon_history');
 	items.find().toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		         } 
-		else {
-
+		else 
 			var docs2 = new Array();
 		    docs2 = docs ;
-            for(i=0;i<=docs2.length;i++){
-           if(docs2[i].straccount==straccount)
-               {
-		
+
+
+		{
+			
 			response.type('application/json');
-			response.status(200).send("已註冊過").end();
-		       }    
-		   }
-            else{
-            	response.type('application/json');
-			    response.status(200).send("未註冊").end();
-		        }
+			response.status(200).send(docs2[0]).end();
 		}
 	});
 });
