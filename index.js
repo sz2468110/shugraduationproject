@@ -101,15 +101,21 @@ app.get('/api/checkstraccount', function(request, response) {
 		if (err) {
 			response.status(406).send(err).end();
 		         } 
-		else 
+		else {
+
 			var docs2 = new Array();
 		    docs2 = docs ;
-
-
-		{
-			
+            
+           if(docs2[].straccount==straccount)
+               {
+		
 			response.type('application/json');
-			response.status(200).send(docs2[0]).end();
+			response.status(200).send("已註冊過").end();
+		       }    
+            else{
+            	response.type('application/json');
+			    response.status(200).send("未註冊過").end();
+		        }
 		}
 	});
 });
