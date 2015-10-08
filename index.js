@@ -28,11 +28,12 @@ app.get('/api/createDataPoint', function(request, response) {
 	var straccount;
 	var strname;
 	var strpasswd;
+	var regid ;
 	var endString
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<3; a++)
+	for(a=0; a<4; a++)
 	{
 		if(a==0)
 		{
@@ -54,13 +55,18 @@ app.get('/api/createDataPoint', function(request, response) {
 		{
             strname = AccountArray[a];
 		}
+		else if(a==3)
+		{
+            regid = AccountArray[a];
+		}
 	}
 
 	var insert = {
 		straccount : straccount,
 		
 		strpasswd : strpasswd,
-		strname : strname
+		strname : strname,
+		regid : regid
 
 	};
 var items = database.collection('beacon_history');
@@ -286,10 +292,10 @@ app.get('/api/findgroup', function(request, response) {
 		}
 	});
 });
-app.get('/api/findusername', function(request, response) {
-	// 輸入群組名字回傳會員名字
+app.get('/api/findmessage', function(request, response) {
+	// 輸入群組名字回傳代辦事項
 	var groupaccount;
-	
+	var message ;
 	var endString
 	var str = request.query.value;
 	var AccountArray = new Array();
@@ -305,8 +311,8 @@ app.get('/api/findusername', function(request, response) {
 
 
 	
-	var items = database.collection('group_history');
-	items.find({groupaccount: groupaccount}, {"username": 1, "_id": 0}).toArray(function(err, docs) {
+	var items = database.collection('message_history');
+	items.find({groupaccount: groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
@@ -357,36 +363,33 @@ app.get('/api/addusername', function(request, response) {
 		}
 	});
 });
-app.get('/api/leavemessage', function(request, response) {
-	// 留下訊息
-	var receiver;
+app.get('/api/createmessage', function(request, response) {
+	// 新增訊息
+	var groupaccount;
 	var message;
-	var sender;
+	
 	
 	var endString
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<3; a++)
+	for(a=0; a<2; a++)
 	{
 		if(a==0)
 		{
-			receiver = AccountArray[a];
+			groupaccount = AccountArray[a];
 		}
 		
 		if(a==1)
 		{
 			message = AccountArray[a];
 		}
-		if(a==2)
-		{
-			sender = AccountArray[a];
-		}
+		
 	}
 	var message = {
-		receiver : receiver ,
-		message : message ,
-		sender : sender
+		groupaccount : groupaccount,
+		message : message 
+		
 
 	};
 
