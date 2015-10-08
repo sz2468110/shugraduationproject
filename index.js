@@ -321,7 +321,7 @@ app.get('/api/findmessage', function(request, response) {
 		}
 	});
 });
-app.get('/api/findmessage', function(request, response) {
+app.get('/api/beaconnumber', function(request, response) {
 	// 輸入beacon編號回傳群組代辦事項
 	var beaconnumber;
 	var groupaccount ;
