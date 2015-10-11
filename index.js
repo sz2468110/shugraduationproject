@@ -352,7 +352,7 @@ app.get('/api/beaconnumber', function(request, response) {
 			
 			items2.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
 			if (err2) {
-			response.status(406).send(err).end();
+			response.status(406).send(err2).end();
 		} else {
 		response.type('application/json');
 			response.status(200).send(docs2[]).end();
