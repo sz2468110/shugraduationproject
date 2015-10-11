@@ -343,7 +343,7 @@ app.get('/api/beaconnumber', function(request, response) {
 	
 	var items = database.collection('beacon_number');
 	var items2 = database.collection('message_history');
-	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,,"_id":0}).toArray(function(err, docs) {
+	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,"_id":0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
