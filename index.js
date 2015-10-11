@@ -343,23 +343,22 @@ app.get('/api/beaconnumber', function(request, response) {
 	
 	var items = database.collection('beacon_number');
 	var items2 = database.collection('message_history');
-	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1}).toArray(function(err, docs) {
+	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,,"_id":0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
 			var groupaccount = new Array();
 			groupaccount = docs ;
-			response.type('application/json');
-			response.status(200).send(groupaccount).end();
-			//items2.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
-			//if (err2) {
-			//response.status(406).send(err).end();
-		//} else {
-		//response.type('application/json');
-		//	response.status(200).send(docs2[]).end();
+			
+			items2.find({"groupaccount":groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
+			if (err2) {
+			response.status(406).send(err).end();
+		} else {
+		response.type('application/json');
+			response.status(200).send(docs2[]).end();
 		}
-	//});
-		//}
+	});
+		}
 	});
 });
 app.get('/api/addusername', function(request, response) {
