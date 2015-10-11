@@ -350,7 +350,7 @@ app.get('/api/beaconnumber', function(request, response) {
 			var groupaccount = new Array();
 			groupaccount = docs ;
 			
-			items2.find({"groupaccount":groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
+			items2.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
 			if (err2) {
 			response.status(406).send(err).end();
 		} else {
