@@ -474,6 +474,48 @@ app.get('/api/createmessage', function(request, response) {
 			response.end();
 		}
 	});
+});app.get('/api/removemessage', function(request, response) {
+	// 刪除訊息
+	var groupaccount;
+	var message;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		
+	}
+	
+var message = {
+		groupaccount : groupaccount,
+		message : message 
+		
+
+	};
+
+
+	var items = database.collection('message_history');
+	items.remove(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send(result);
+			response.end();
+		}
+	});
 });
 app.get('/api/checkmessage', function(request, response) {
 	// 查看訊息
