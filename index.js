@@ -512,7 +512,7 @@ var message = {
 			__sendErrorResponse(response, 406, err);
 		} else {
 			response.type('application/json');
-			response.status(200).send(result);
+			response.status(200).send("成功刪除");
 			response.end();
 		}
 	});
