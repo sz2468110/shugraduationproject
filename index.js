@@ -455,7 +455,7 @@ app.get('/api/createmessage', function(request, response) {
 		}
 		
 	}
-	var message = {
+	var message2 = {
 		groupaccount : groupaccount,
 		message : message 
 		
@@ -465,12 +465,12 @@ app.get('/api/createmessage', function(request, response) {
 
 
 	var items = database.collection('message_history');
-	items.insert(message, function(err, result) {
+	items.insert(message2, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
 		} else {
 			response.type('application/json');
-			response.status(200).send(result);
+			response.status(200).send(message);
 			response.end();
 		}
 	});
