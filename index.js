@@ -470,7 +470,7 @@ app.get('/api/createmessage', function(request, response) {
 			__sendErrorResponse(response, 406, err);
 		} else {
 			response.type('application/json');
-			response.status(200).send(message);
+			response.status(200).send(新建成功);
 			response.end();
 		}
 	});
@@ -519,7 +519,7 @@ var message = {
 });
 app.get('/api/checkmessage', function(request, response) {
 	// 查看訊息
-	var receiver;
+	var groupaccount;
 	var message;
 	var sender;
 	
@@ -527,22 +527,19 @@ app.get('/api/checkmessage', function(request, response) {
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<2; a++)
+	for(a=0; a<1; a++)
 	{
 		if(a==0)
 		{
-			receiver = AccountArray[a];
+			groupaccount = AccountArray[a];
 		}
 		
-		if(a==1)
-		{
-			sender = AccountArray[a];
-		}
+		
 	}
 
 	
 	var items = database.collection('message_history');
-	items.find({receiver : receiver , sender : sender}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
+	items.find({groupaccount:groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
