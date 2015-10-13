@@ -341,7 +341,7 @@ app.get('/api/findmessage', function(request, response) {
 
 	
 	var items = database.collection('message_history');
-	items.find({groupaccount: groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
+	items.find({groupaccount: groupaccount}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
