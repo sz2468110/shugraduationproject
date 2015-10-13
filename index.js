@@ -470,7 +470,7 @@ app.get('/api/createmessage', function(request, response) {
 			__sendErrorResponse(response, 406, err);
 		} else {
 			response.type('application/json');
-			response.status(200).send(新建成功);
+			response.status(200).send("新建成功");
 			response.end();
 		}
 	});
