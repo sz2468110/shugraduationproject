@@ -2,6 +2,7 @@ var express = require('express');
 var mongodb = require('mongodb');
 var moment = require('moment');
 var crypto = require('crypto');
+var gcm = require('node-gcm');
 var app = express();
 
 var uri = 'mongodb://sz2468110:sz135799@ds047802.mongolab.com:47802/shugraduationproject';
@@ -322,6 +323,35 @@ app.get('/api/findgroupaccount', function(request, response) {
 	});
 });
 app.get('/api/findmessage', function(request, response) {
+	// GCM  推播訊息
+	var groupaccount;
+	var message ;
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<1; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+	}
+
+
+	
+	var items = database.collection('group_history');
+	items.find({groupaccount : groupaccount}, {"regid": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+});
+app.get('/api/findmessage', function(request, response) {
 	// 輸入群組名字回傳代辦事項
 	var groupaccount;
 	var message ;
@@ -376,17 +406,20 @@ app.get('/api/beaconnumber', function(request, response) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
+			console.log('result ' + JSON.stringify(docs));
 			var groupaccount = new Array();
 			groupaccount = docs ;
 			
 			items2.find().toArray(function(err2, docs2) {
-			if (err2) {
-			response.status(406).send(err2).end();
-		} else {
-		response.type('application/json');
-			response.status(200).send(docs2).end();
-		}
-	});
+				if (err2) {
+					response.status(406).send(err2).end();
+				} else {
+
+					console.log('result2 ' + JSON.stringify(docs2));
+					response.type('application/json');
+					response.status(200).send(docs2).end();
+				}
+			});
 		}
 	});
 });
