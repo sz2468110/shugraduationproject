@@ -322,12 +322,32 @@ app.get('/api/findgroupaccount', function(request, response) {
 		}
 	});
 });
+
+app.get('/api/insertRegId', function(request, response) {  //儲存regid
+	var items = database.collection('group_history');
+
+	var str = request.query.value;
+	var Ary = new Array();
+	var Ary= str.split(",");
+
+	var name = Ary[0];
+	var regid = Ary[1];
+	items.update( { username:name }, { '$set': { regid:regid } });
+	response.type('application/json');
+	response.status(200).send("Succeed Save"); 
+	response.end();
+
+});
+
+var msg;
+var RegId;
+
 app.get('/api/findmessage', function(request, response) {
 	// GCM  推播訊息
 	var groupaccount;
 	var message ;
 	var endString
-	var str = request.query.value;
+	var str = request.query.value;  
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
 	for(a=0; a<1; a++)
@@ -336,10 +356,7 @@ app.get('/api/findmessage', function(request, response) {
 		{
 			groupaccount = AccountArray[a];
 		}
-		
 	}
-
-
 	
 	var items = database.collection('group_history');
 	items.find({groupaccount : groupaccount}, {"regid": 1, "_id": 0}).toArray(function(err, docs) {
@@ -351,6 +368,52 @@ app.get('/api/findmessage', function(request, response) {
 		}
 	});
 });
+
+function getGCM() {
+    var gcm4node = require('gcm4node');
+
+    // only auth is REQUIRED
+    var config = {
+        auth: 'AIzaSyAlEDjGPKyKTdWBQ1IAP29SFk98zI6-g-Q',
+        dryRun: false,
+        group_size: 1000,
+        verbose: false
+    };
+    var gcm = gcm4node.gcm4node(config);
+
+    gcm.on('removed', function (removed) {
+        console.log('removed devices: ' + removed.length);
+    });
+    gcm.on('updated', function (updated) {
+        console.log('updated devices: ' + updated.length);
+    });
+    gcm.on('invalid', function (invalid) {
+        console.log('invalid devices: ' + invalid.length);
+    });
+
+    // only the collapseKey option is REQUIRED
+    var options = {
+        collapseKey: 'msg',
+        delayWhileIdle: true,
+        timeToLive: 3,
+        data: {
+            msg:msg
+        }
+    };
+
+    // here you can put more than 1,000 clients
+    var clients = new Array();
+    var clients = RegId.split(",");
+    gcm.send(clients, options, function(err, removed, updated, invalid) {
+        if (err)
+            console.log('ops: ' + err);
+        else
+            console.log('removed: ' + removed.length +
+                ', updated: ' + updated.length +
+                ', invalid: ' + invalid.length);
+    });
+}
+
 app.get('/api/findmessage', function(request, response) {
 	// 輸入群組名字回傳代辦事項
 	var groupaccount;
