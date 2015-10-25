@@ -356,10 +356,11 @@ var RegId;
 app.get('/api/findmessage', function(request, response) {
 	// GCM  推播訊息
 	var groupaccount;
-	var message ;
-	var endString
+	var message;
+	var endString;
 	var str = request.query.value;  
-	var AccountArray = new Array();
+	RegId = "";
+	/*var AccountArray = new Array();
 	var AccountArray = str.split(",");
 	for(a=0; a<1; a++)
 	{
@@ -367,15 +368,30 @@ app.get('/api/findmessage', function(request, response) {
 		{
 			groupaccount = AccountArray[a];
 		}
-	}
-	
+	}*/
+	groupaccount = str;
 	var items = database.collection('group_history');
 	items.find({groupaccount : groupaccount}, {"regid": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
+
+			var jsArray = new Array();
+            var jsArray = docs;
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray[i];
+                if(jsObj.regid!=null && jsObj.regid != " " && jsObj.regid !=""){
+					RegId += jsObj.regid + ",";
+					console.log('regid : ' +  jsObj.regid); 
+                }
+                    
+                
+            }
+            msg = "此處填入MSG";
+            getGCM();
 			response.type('application/json');
-			response.status(200).send(docs).end();
+			response.status(200).send(RegId + " : " + msg).end();
 		}
 	});
 });
@@ -385,7 +401,7 @@ function getGCM() {
 
     // only auth is REQUIRED
     var config = {
-        auth: 'AIzaSyAlEDjGPKyKTdWBQ1IAP29SFk98zI6-g-Q',
+        auth: 'AIzaSyCkrINxWlkkm9dh241V7XB7e8ShX6ZjG90',
         dryRun: false,
         group_size: 1000,
         verbose: false
@@ -415,6 +431,7 @@ function getGCM() {
     // here you can put more than 1,000 clients
     var clients = new Array();
     var clients = RegId.split(",");
+    console.log('ALL client : ' + clients);
     gcm.send(clients, options, function(err, removed, updated, invalid) {
         if (err)
             console.log('ops: ' + err);
