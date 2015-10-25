@@ -334,10 +334,19 @@ var items = database.collection('group_history');
 
 	var account = Ary[0];
 	var regid = Ary[1];
-	items.update( { straccount:account}, { '$set': { regid:regid } });
-	response.type('application/json');
-	response.status(200).send("Succeed Save"); 
-	response.end();
+	items.find({straccount : straccount}, {"straccount": 1, "_id": 0}).toArray(function (err, docs) {
+		if (err) {
+			console.log(err);
+			__sendErrorResponse(response, 406, err);
+		} else {
+			items.update( { straccount:account}, { '$set': { regid:regid } });
+			response.type('application/json');
+			var re = "Succeed Save : " + account + " : " + regid;
+			response.status(200).send(re); 
+			response.end();
+		}
+	});
+	
 
 });
 
