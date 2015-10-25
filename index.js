@@ -209,7 +209,8 @@ app.get('/api/addgroup', function(request, response) {
 		groupaccount : groupaccount,
 		
 		grouppasswd : grouppasswd,
-		username : username
+		username : username,
+		straccount : straccount
 
 	};
 	var name = {
@@ -324,15 +325,16 @@ app.get('/api/findgroupaccount', function(request, response) {
 });
 
 app.get('/api/insertRegId', function(request, response) {  //儲存regid
-	var items = database.collection('group_history');
+	
+var items = database.collection('group_history');
 
 	var str = request.query.value;
 	var Ary = new Array();
 	var Ary= str.split(",");
 
-	var name = Ary[0];
+	var account = Ary[0];
 	var regid = Ary[1];
-	items.update( { username:name }, { '$set': { regid:regid } });
+	items.update( { straccount:account}, { '$set': { regid:regid } });
 	response.type('application/json');
 	response.status(200).send("Succeed Save"); 
 	response.end();
