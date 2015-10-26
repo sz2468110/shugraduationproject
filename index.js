@@ -393,13 +393,13 @@ app.get('/api/sendGCM', function(request, response) {
             }
             var items2 = database.collection('message_history');
 	items2.find({groupaccount: groupaccount},{"message": 1,"_id":0}).toArray(function(err2, docs2) {
-		if (err) {
+		if (err2) {
 			response.status(406).send(err2).end();
 		} else {
 			msg = "";
            var jsArray2 = new Array();
             var jsArray2 = docs2;
-            for(var i = 0; i < jsArray.length; i++){
+            for(var i = 0; i < jsArray2.length; i++){
                 var jsObj = Object();
                 var jsObj = jsArray2[i];
                 if(jsObj.message!=null && jsObj.message != " " && jsObj.message !=""){
