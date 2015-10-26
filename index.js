@@ -351,15 +351,18 @@ var items = database.collection('group_history');
 });
 
 var msg;
+var allmsg = new Array();
+var sendmsg;
 var RegId;
 
-app.get('/api/findmessage', function(request, response) {
+app.get('/api/sendGCM', function(request, response) {
 	// GCM  推播訊息
 	var groupaccount;
 	var message;
 	var endString;
 	var str = request.query.value;  
 	RegId = "";
+
 	/*var AccountArray = new Array();
 	var AccountArray = str.split(",");
 	for(a=0; a<1; a++)
@@ -388,10 +391,33 @@ app.get('/api/findmessage', function(request, response) {
                     
                 
             }
-            msg = "此處填入MSG";
+            var items2 = database.collection('message_history');
+	items2.find({groupaccount: groupaccount},{"message": 1,"_id":0}).toArray(function(err2, docs2) {
+		if (err) {
+			response.status(406).send(err2).end();
+		} else {
+			msg = "";
+           var jsArray2 = new Array();
+            var jsArray2 = docs2;
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray2[i];
+                if(jsObj.message!=null && jsObj.message != " " && jsObj.message !=""){
+					msg += jsObj.message + ",";
+					console.log('message : ' +  jsObj.message); 
+                }
+                    
+            }
+            
+    		var allmsg = msg.split(",");
+			sendmsg = "你現在有" + (allmsg.length-1).toString() + "筆訊息";
+           
             getGCM();
 			response.type('application/json');
 			response.status(200).send(RegId + " : " + msg).end();
+		
+	}
+	}); 
 		}
 	});
 });
@@ -418,20 +444,19 @@ function getGCM() {
         console.log('invalid devices: ' + invalid.length);
     });
 
+    
+    
     // only the collapseKey option is REQUIRED
-    var options = {
+    	var options = {
         collapseKey: 'msg',
         delayWhileIdle: true,
         timeToLive: 3,
         data: {
-            msg:msg
+            msg:sendmsg
         }
     };
-
-    // here you can put more than 1,000 clients
     var clients = new Array();
     var clients = RegId.split(",");
-    console.log('ALL client : ' + clients);
     gcm.send(clients, options, function(err, removed, updated, invalid) {
         if (err)
             console.log('ops: ' + err);
@@ -440,6 +465,8 @@ function getGCM() {
                 ', updated: ' + updated.length +
                 ', invalid: ' + invalid.length);
     });
+
+    
 }
 
 app.get('/api/findmessage', function(request, response) {
