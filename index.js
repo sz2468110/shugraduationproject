@@ -410,7 +410,7 @@ app.get('/api/sendGCM', function(request, response) {
             }
             
     		var allmsg = msg.split(",");
-			sendmsg = groupaccount + "你現在有" + (allmsg.length-1).toString() + "筆訊息";
+			sendmsg = "你現在有" + (allmsg.length-1).toString() + "筆"+groupaccount+"的訊息";
            
             getGCM();
 			response.type('application/json');
