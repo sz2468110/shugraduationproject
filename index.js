@@ -164,7 +164,7 @@ app.get('/api/logingroup', function(request, response) {
 	// 群組登入回傳密碼
 	var groupaccount;
 	var strname;
-	var strpasswd;
+	var grouppasswd;
 	var endString
 	var str = request.query.value;
 	var AccountArray = new Array();
@@ -173,20 +173,20 @@ app.get('/api/logingroup', function(request, response) {
 	{
 		if(a==0)
 		{
-			straccount = AccountArray[a];
+			groupaccount = AccountArray[a];
 		}
 		else if (a == 1)
         {
         	
-         strpasswd = AccountArray[a];
+         grouppasswd = AccountArray[a];
 
         }
 		
 	}
 
 	
-	var items = database.collection('beacon_history');
-	items.find({straccount: straccount}, {"strpasswd": 1, "_id": 0}).toArray(function(err, docs) {
+	var items = database.collection('group_history');
+	items.find({groupaccount:groupaccount}, {"grouppasswd": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		         } 
