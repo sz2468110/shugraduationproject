@@ -334,7 +334,7 @@ var items = database.collection('group_history');
 
 	var account = Ary[0];
 	var regid = Ary[1];
-	items.find({straccount : account}, {"straccount": 4, "_id": 0}).toArray(function (err, docs) {
+	items.find({straccount : account}, {"straccount": 1, "_id": 0}).toArray(function (err, docs) {
 		if (err) {
 			console.log(err);
 			__sendErrorResponse(response, 406, err);
