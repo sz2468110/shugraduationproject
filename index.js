@@ -165,6 +165,7 @@ app.get('/api/logingroup', function(request, response) {
 	var groupaccount;
 	var strname;
 	var grouppasswd;
+		var grouppasswd;vv
 	var endString
 	var str = request.query.value;
 	var AccountArray = new Array();
