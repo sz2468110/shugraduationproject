@@ -539,7 +539,7 @@ app.get('/api/findmessage', function(request, response) {
 	});
 })
 app.get('/api/beaconnumber2', function(request, response) {
-	// 輸入群組名字回傳代辦事項
+	// 輸入beaconid回傳代辦事項
 	var groupaccount;
 	var message ;
 	var endString
@@ -565,7 +565,12 @@ beaconnumber = str ;
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
-		groupaccount = docs ;
+			  var jsArray2 = new Array();
+            var jsArray2 = docs;
+            for(var i = 0; i < jsArray2.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray2[i];
+		groupaccount = jsObj ;
 		}
 	});
 	var items2 = database.collection('message_history');
