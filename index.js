@@ -564,16 +564,49 @@ beaconnumber = str ;
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
-			  var jsArray2 = new Array();
-            var jsArray2 = docs;
-            for(var i = 0; i < jsArray2.length; i++){
+			response.type('application/json');
+			groupaccount= "";
+			 var jsArray = new Array();
+            var jsArray = docs;
+            if(jsArray=="" || jsArray == null){
+					response.status(200).send('err').end();
+				}
+			else{
+				for(var i = 0; i < jsArray.length; i++){
                 var jsObj = Object();
-                var jsObj = jsArray2[i];
+                var jsObj = jsArray[i];
 				groupaccount = jsObj.groupaccount ; 
+				console.log('grpaccount1:' + groupaccount);
+
+					var items2 = database.collection('message_history');
+					items2.find({groupaccount:groupaccount},  {"message": 1,"_id":0}).toArray(function(err2, docs2) {
+
+					if (err2) {
+						response.status(406).send(err2).end();
+					} else {
+
+						var jsArray2 = new Array();
+			            var jsArray2 = docs2;
+			            for(var i = 0; i < jsArray2.length; i++){
+			                var jsObj = Object();
+			                var jsObj = jsArray2[i];
+			                console.log('msg :' + jsObj.message);
+			            }
+						
+						response.status(200).send(docs2).end();
+					}
+					});
+				}
+				
 			}
-		}
+            
+			}
+		
 	});
-	var items2 = database.collection('message_history');
+
+	console.log('grpaccount2:' + groupaccount);
+
+	/*var items2 = database.collection('message_history');
 	items2.find({groupaccount:groupaccount},  {"message": 1,"_id":0}).toArray(function(err2, docs2) {
 
 		if (err2) {
@@ -590,7 +623,7 @@ beaconnumber = str ;
 			response.type('application/json');
 			response.status(200).send(docs2).end();
 		}
-	});
+	});*/
 })
 app.get('/api/beaconnumber2', function(request, response) {
 	// 輸入beacon編號回傳群組代辦事項
