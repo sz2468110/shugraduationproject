@@ -545,7 +545,7 @@ app.get('/api/beaconnumber', function(request, response) {
 	var message ;
 	var endString
 	var str = request.query.value;
-	var AccountArray = new Array();
+	/*var AccountArray = new Array();
 	var AccountArray = str.split(",");
 	for(a=0; a<1; a++)
 	{
@@ -555,7 +555,8 @@ app.get('/api/beaconnumber', function(request, response) {
 		}
 		
 	}
-
+*/
+   beaconnumber = str;
 
 	
 	var items = database.collection('beacon_number');
@@ -568,7 +569,7 @@ app.get('/api/beaconnumber', function(request, response) {
 			var groupaccount = new Array();
 			var groupaccount = docs ;
 			
-			items2.find({groupaccount:groupaccount}, {}).toArray(function(err2, docs2) {
+			items2.find({groupaccount:groupaccount}).toArray(function(err2, docs2) {
 				if (err2) {
 					response.status(406).send(err2).end();
 				} else {
