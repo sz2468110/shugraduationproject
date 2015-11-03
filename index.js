@@ -570,7 +570,7 @@ beaconnumber = str ;
             for(var i = 0; i < jsArray2.length; i++){
                 var jsObj = Object();
                 var jsObj = jsArray2[i];
-		groupaccount += jsObj ;}
+		groupaccount = jsObj.groupaccount ; }
 		}
 	});
 	var items2 = database.collection('message_history');
