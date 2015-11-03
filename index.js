@@ -611,8 +611,12 @@ app.get('/api/beaconnumber', function(request, response) {
 			response.status(406).send(err).end();
 		} else {
 			console.log('result ' + JSON.stringify(docs));
-			var groupaccount = new Array();
-			var groupaccount = docs ;
+			  var jsArray2 = new Array();
+            var jsArray2 = docs;
+            for(var i = 0; i < jsArray2.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray2[i];
+			groupaccount = jsObj ;
 			
 			items2.find({groupaccount:groupaccount}).toArray(function(err2, docs2) {
 				if (err2) {
