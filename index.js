@@ -537,7 +537,47 @@ app.get('/api/findmessage', function(request, response) {
 			response.status(200).send(docs).end();
 		}
 	});
-});
+})
+app.get('/api/beaconnumber2', function(request, response) {
+	// 輸入群組名字回傳代辦事項
+	var groupaccount;
+	var message ;
+	var endString
+	var str = request.query.value;
+	groupaccount = "" ;
+	/*var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<1; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+	}
+*/
+beaconnumber = str ;
+
+	
+	var items = database.collection('beacon_number');
+	var items2 = database.collection('message_history');
+	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,"_id":0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+		groupaccount = docs ;
+		}
+	});
+
+	items.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
+		if (err2) {
+			response.status(406).send(err2).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs2).end();
+		}
+	});
+})
 app.get('/api/beaconnumber', function(request, response) {
 	// 輸入beacon編號回傳群組代辦事項
 	var beaconnumber;
