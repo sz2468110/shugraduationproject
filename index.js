@@ -560,7 +560,7 @@ beaconnumber = str ;
 
 	
 	var items = database.collection('beacon_number');
-	var items2 = database.collection('message_history');
+
 	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,"_id":0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
@@ -568,8 +568,8 @@ beaconnumber = str ;
 		groupaccount = docs ;
 		}
 	});
-
-	items.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
+	var items2 = database.collection('message_history');
+	items2.find({groupaccount:groupaccount}, {"message": 1,"_id":0}).toArray(function(err2, docs2) {
 		if (err2) {
 			response.status(406).send(err2).end();
 		} else {
