@@ -684,15 +684,36 @@ var message = {
 
 
 	var items = database.collection('message_history');
-	items.remove(message, function(err, result) {
+	items.find({groupaccount:groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs)
+	{
 		if (err) {
 			__sendErrorResponse(response, 406, err);
 		} else {
-			response.type('application/json');
-			response.status(200).send("成功刪除");
-			response.end();
+		var jsArray = new Array();
+            var jsArray = docs;
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray[i];
+                if(jsObj.message == "洗衣服"){
+		
+	       items.remove(message, function(err, result) {
+		       if (err) {
+			      __sendErrorResponse(response, 406, err);
+		       } else {
+			    response.type('application/json');
+			    response.status(200).send("成功刪除");
+			    response.end();
+			}
+			else{
+				response.type('application/json');
+			    response.status(200).send("沒有衣服可以洗啦!");
+			    response.end();
+
+			}
 		}
 	});
+    }
+      });
 });
 app.get('/api/delete2', function(request, response) {
 	// 刪除事情  (吃藥)
@@ -726,6 +747,7 @@ var message = {
 
 
 	var items = database.collection('message_history');
+
 	items.remove(message, function(err, result) {
 		if (err) {
 			__sendErrorResponse(response, 406, err);
@@ -735,6 +757,7 @@ var message = {
 			response.end();
 		}
 	});
+
 });
 
 app.get('/api/addusername', function(request, response) {
