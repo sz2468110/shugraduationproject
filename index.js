@@ -398,23 +398,20 @@ var RegId;
 app.get('/api/sendGCM', function(request, response) {
 	// GCM  推播訊息
 	var groupaccount;
+	var account;
 	var message;
 	var endString;
 	var str = request.query.value;  
 	RegId = "";
 
-	/*var AccountArray = new Array();
+	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<1; a++)
-	{
-		if(a==0)
-		{
-			groupaccount = AccountArray[a];
-		}
-	}*/
-	groupaccount = str;
+			account = AccountArray[1];
+			groupaccount = AccountArray[0];
+
+
 	var items = database.collection('group_history');
-	items.find({groupaccount : groupaccount}, {"regid": 1, "_id": 0}).toArray(function(err, docs) {
+	items.find({groupaccount : groupaccount}, {"regid": 1, "straccount": 1, "_id": 0}).toArray(function(err, docs) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
@@ -424,10 +421,13 @@ app.get('/api/sendGCM', function(request, response) {
             for(var i = 0; i < jsArray.length; i++){
                 var jsObj = Object();
                 var jsObj = jsArray[i];
-                if(jsObj.regid!=null && jsObj.regid != " " && jsObj.regid !=""){
+                if(jsObj.straccount == account){
+                	if(jsObj.regid!=null && jsObj.regid != " " && jsObj.regid !=""){
 					RegId += jsObj.regid + ",";
 					console.log('regid : ' +  jsObj.regid); 
                 }
+                }
+                
                     
                 
             }
