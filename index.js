@@ -677,7 +677,7 @@ app.get('/api/beaconnumber2', function(request, response) {
 	
 var message = {
 		groupaccount : groupaccount,
-		message : 洗衣服 
+		message : "洗衣服" 
 		
 
 	};
