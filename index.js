@@ -720,8 +720,7 @@ app.get('/api/delete2', function(request, response) {
 	
 var message = {
 		groupaccount : groupaccount,
-		message : message 
-		
+		message : "吃藥"
 
 	};
 
