@@ -651,7 +651,93 @@ app.get('/api/beaconnumber2', function(request, response) {
 			});
 		}
 	});
+});app.get('/api/delete1', function(request, response) {
+	// 刪除事情 (洗衣服)
+	var groupaccount;
+	var message;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		
+	}
+	
+var message = {
+		groupaccount : groupaccount,
+		message : 洗衣服 
+		
+
+	};
+
+
+	var items = database.collection('message_history');
+	items.remove(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send("成功刪除");
+			response.end();
+		}
+	});
 });
+app.get('/api/delete2', function(request, response) {
+	// 刪除事情  (吃藥)
+	var groupaccount;
+	var message;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		
+	}
+	
+var message = {
+		groupaccount : groupaccount,
+		message : message 
+		
+
+	};
+
+
+	var items = database.collection('message_history');
+	items.remove(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send("成功刪除");
+			response.end();
+		}
+	});
+});
+
 app.get('/api/addusername', function(request, response) {
 	// 加人到群組
 	var groupaccount;
