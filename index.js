@@ -604,55 +604,8 @@ beaconnumber = str ;
 		}
 	});*/
 })
-app.get('/api/beaconnumber2', function(request, response) {
-	// 輸入beacon編號回傳群組代辦事項
-	var beaconnumber;
-	var groupaccount ;
-	var message ;
-	var endString
-	var str = request.query.value;
-	/*var AccountArray = new Array();
-	var AccountArray = str.split(",");
-	for(a=0; a<1; a++)
-	{
-		if(a==0)
-		{
-			beaconnumber = AccountArray[a];
-		}
-		
-	}
-*/
-   beaconnumber = str;
 
-	
-	var items = database.collection('beacon_number');
-	var items2 = database.collection('message_history');
-	items.find({beaconnumber:beaconnumber}, {"groupaccount": 1,"_id":0}).toArray(function(err, docs) {
-		if (err) {
-			response.status(406).send(err).end();
-		} else {
-			//console.log('result ' + JSON.stringify(docs));
-			  var jsArray2 = new Array();
-            var jsArray2 = docs;
-            for(var i = 0; i < jsArray2.length; i++){
-                var jsObj = Object();
-                var jsObj = jsArray2[i];}
-			groupaccount = jsObj ;
-			
-			items2.find({groupaccount:groupaccount}).toArray(function(err2, docs2) {
-				if (err2) {
-					response.status(406).send(err2).end();
-				} else {
-
-					console.log('result2 ' + JSON.stringify(docs2));
-					response.type('application/json');
-					response.status(200).send(docs2).end();
-				}
-			});
-		}
-	});
-});
-/*app.get('/api/delete1', function(request, response) {
+app.get('/api/delete1', function(request, response) {
 	// 刪除事情 (洗衣服)
 	var groupaccount;
 	var message;
@@ -662,21 +615,18 @@ app.get('/api/beaconnumber2', function(request, response) {
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<2; a++)
+	for(a=0; a<1; a++)
 	{
 		if(a==0)
 		{
 			groupaccount = AccountArray[a];
 		}
 		
-		if(a==1)
-		{
-			message = AccountArray[a];
-		}
+		
 		
 	}
 	
-var message = {
+var message2 = {
 		groupaccount : groupaccount,
 		message : "洗衣服" 
 		
@@ -695,38 +645,41 @@ var message = {
 	    {
 		  var jsArray = new Array();
             var jsArray = docs;
+            response.type('application/json');
             for(var i = 0; i < jsArray.length; i++){
                 var jsObj = Object();
-                var jsObj = jsArray[i];  }
+                var jsObj = jsArray[i];  
             if(jsObj.message == "洗衣服")
             {
 		
-	       items.remove(message, function(err, result)
+	       items.remove(message2, function(err2, result)
 	        {
-		       if (err) {
-			      __sendErrorResponse(response, 406, err);
+		       if (err2) {
+			      __sendErrorResponse(response, 406, err2);
 		                }
 		       else {
-			    response.type('application/json');
+			    
 			    response.status(200).send("成功刪除");
 			    response.end();
 			       }
 		    });
-			else{
-				response.type('application/json');
-			    response.status(200).send("沒有衣服可以洗啦!");
+	       break;
+	       }
+
+			else if(i == jsArray.length -1 && jsObj.message != "洗衣服"){
+			    response.status(200).send("吃藥");
 			    response.end();
 
 			    }
-		    }  
+		    }
 	
     
          }
       });
 });
-*/
+
 app.get('/api/delete2', function(request, response) {
-	// 刪除事情  (吃藥)
+	// 刪除事情 (吃藥)
 	var groupaccount;
 	var message;
 	
@@ -735,40 +688,69 @@ app.get('/api/delete2', function(request, response) {
 	var str = request.query.value;
 	var AccountArray = new Array();
 	var AccountArray = str.split(",");
-	for(a=0; a<2; a++)
+	for(a=0; a<1; a++)
 	{
 		if(a==0)
 		{
 			groupaccount = AccountArray[a];
 		}
 		
-		if(a==1)
-		{
-			message = AccountArray[a];
-		}
+		
 		
 	}
 	
-var message = {
+var message2 = {
 		groupaccount : groupaccount,
-		message : "吃藥"
+		message : "吃藥" 
+		
 
 	};
 
 
 	var items = database.collection('message_history');
-
-	items.remove(message, function(err, result) {
-		if (err) {
+	items.find({groupaccount:groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs)
+	{
+		if (err) 
+		{
 			__sendErrorResponse(response, 406, err);
-		} else {
-			response.type('application/json');
-			response.status(200).send("成功刪除");
-			response.end();
-		}
-	});
+		} 
+		else
+	    {
+		  var jsArray = new Array();
+            var jsArray = docs;
+            response.type('application/json');
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray[i];  
+            if(jsObj.message == "吃藥")
+            {
+		
+	       items.remove(message2, function(err2, result)
+	        {
+		       if (err2) {
+			      __sendErrorResponse(response, 406, err2);
+		                }
+		       else {
+			    
+			    response.status(200).send("成功刪除");
+			    response.end();
+			       }
+		    });
+	       break;
+	       }
 
+			else if(i == jsArray.length -1 && jsObj.message != "吃藥"){
+			    response.status(200).send("失敗");
+			    response.end();
+
+			    }
+		    }
+	
+    
+         }
+      });
 });
+
 
 app.get('/api/addusername', function(request, response) {
 	// 加人到群組
