@@ -651,7 +651,8 @@ app.get('/api/beaconnumber2', function(request, response) {
 			});
 		}
 	});
-});app.get('/api/delete1', function(request, response) {
+});
+/*app.get('/api/delete1', function(request, response) {
 	// 刪除事情 (洗衣服)
 	var groupaccount;
 	var message;
@@ -696,7 +697,7 @@ var message = {
             var jsArray = docs;
             for(var i = 0; i < jsArray.length; i++){
                 var jsObj = Object();
-                var jsObj = jsArray[i];}
+                var jsObj = jsArray[i];  }
             if(jsObj.message == "洗衣服")
             {
 		
@@ -723,6 +724,7 @@ var message = {
          }
       });
 });
+*/
 app.get('/api/delete2', function(request, response) {
 	// 刪除事情  (吃藥)
 	var groupaccount;
