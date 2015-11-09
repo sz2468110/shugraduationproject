@@ -667,7 +667,7 @@ var message2 = {
 	       }
 
 			else if(i == jsArray.length -1 && jsObj.message != "洗衣服"){
-			    response.status(200).send("吃藥");
+			    response.status(200).send("沒有洗衣服");
 			    response.end();
 
 			    }
@@ -740,7 +740,7 @@ var message2 = {
 	       }
 
 			else if(i == jsArray.length -1 && jsObj.message != "吃藥"){
-			    response.status(200).send("失敗");
+			    response.status(200).send("沒有吃藥");
 			    response.end();
 
 			    }
