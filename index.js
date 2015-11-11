@@ -910,6 +910,80 @@ app.get('/api/checkmessage', function(request, response) {
 		}
 	});
 });
+app.get('/api/check1', function(request, response) {
+	// 檢查洗衣服
+	var groupaccount;
+	var message;
+	var sender;
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<1; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		
+	}
+
+	
+	var items = database.collection('message_history');
+	items.find({groupaccount:groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+			response.type('application/json');
+			response.status(200).send(docs).end();
+		}
+	});
+});
+app.get('/api/remove1', function(request, response) {
+	// 刪除洗衣服
+	var groupaccount;
+	var message;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		
+	}
+	
+var message = {
+		groupaccount : groupaccount,
+		message : "洗衣服" 
+		
+
+	};
+
+
+	var items = database.collection('message_history');
+	items.remove(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send("成功刪除");
+			response.end();
+		}
+	});
+});
 app.get('/api/updatausername', function(request, response) {
 	// 修改暱稱
 	var old_username;
