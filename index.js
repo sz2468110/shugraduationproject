@@ -936,9 +936,29 @@ app.get('/api/check1', function(request, response) {
 		if (err) {
 			response.status(406).send(err).end();
 		} else {
-			response.type('application/json');
-			response.status(200).send(docs).end();
-		}
+		  var jsArray = new Array();
+            var jsArray = docs;
+            response.type('application/json');
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray[i];  
+            if(jsObj.message == "洗衣服")
+            {
+		  response.status(200).send("1");
+			    response.end();
+	      
+	       break;
+	       }
+
+			else if(i == jsArray.length -1 && jsObj.message != "洗衣服"){
+			    response.status(200).send("0");
+			    response.end();
+
+			    }
+		    }
+	
+    
+         }
 	});
 });
 app.get('/api/remove1', function(request, response) {
