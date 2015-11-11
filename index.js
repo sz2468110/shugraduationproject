@@ -944,14 +944,14 @@ app.get('/api/check1', function(request, response) {
                 var jsObj = jsArray[i];  
             if(jsObj.message == "洗衣服")
             {
-		  response.status(200).send("1");
+		  response.status(200).send("[{"check":"1"}]");
 			    response.end();
 	      
 	       break;
 	       }
 
 			else if(i == jsArray.length -1 && jsObj.message != "洗衣服"){
-			    response.status(200).send("0");
+			    response.status(200).send("[{"check":"0"}]");
 			    response.end();
 
 			    }
