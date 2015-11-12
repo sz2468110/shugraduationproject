@@ -1004,6 +1004,100 @@ var message = {
 		}
 	});
 });
+app.get('/api/check2', function(request, response) {
+	// 檢查吃藥
+	var groupaccount;
+	var message;
+	var sender;
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<1; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		
+	}
+
+	
+	var items = database.collection('message_history');
+	items.find({groupaccount:groupaccount}, {"message": 1, "_id": 0}).toArray(function(err, docs) {
+		if (err) {
+			response.status(406).send(err).end();
+		} else {
+		  var jsArray = new Array();
+            var jsArray = docs;
+            response.type('application/json');
+            for(var i = 0; i < jsArray.length; i++){
+                var jsObj = Object();
+                var jsObj = jsArray[i];  
+            if(jsObj.message == "吃藥")
+            {
+		  response.status(200).send("1");
+			    response.end();
+	      
+	       break;
+	       }
+
+			else if(i == jsArray.length -1 && jsObj.message != "吃藥"){
+			    response.status(200).send("0");
+			    response.end();
+
+			    }
+		    }
+	
+    
+         }
+	});
+});
+app.get('/api/remove2', function(request, response) {
+	// 刪除吃藥
+	var groupaccount;
+	var message;
+	
+	
+	var endString
+	var str = request.query.value;
+	var AccountArray = new Array();
+	var AccountArray = str.split(",");
+	for(a=0; a<2; a++)
+	{
+		if(a==0)
+		{
+			groupaccount = AccountArray[a];
+		}
+		
+		if(a==1)
+		{
+			message = AccountArray[a];
+		}
+		
+	}
+	
+var message = {
+		groupaccount : groupaccount,
+		message : "吃藥" 
+		
+
+	};
+
+
+	var items = database.collection('message_history');
+	items.remove(message, function(err, result) {
+		if (err) {
+			__sendErrorResponse(response, 406, err);
+		} else {
+			response.type('application/json');
+			response.status(200).send("成功刪除");
+			response.end();
+		}
+	});
+});
 app.get('/api/updatausername', function(request, response) {
 	// 修改暱稱
 	var old_username;
