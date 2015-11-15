@@ -1101,7 +1101,7 @@ var message = {
 app.get('/api/updatausername', function(request, response) {
 	// 修改暱稱
 	var old_username;
-	
+	var fsff
 	
 	var endString
 	var str = request.query.value;
